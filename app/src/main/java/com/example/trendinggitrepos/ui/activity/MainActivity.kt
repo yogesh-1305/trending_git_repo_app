@@ -2,7 +2,10 @@ package com.example.trendinggitrepos.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.trendinggitrepos.data.api.RepositoryApi
 import com.example.trendinggitrepos.databinding.ActivityMainBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
