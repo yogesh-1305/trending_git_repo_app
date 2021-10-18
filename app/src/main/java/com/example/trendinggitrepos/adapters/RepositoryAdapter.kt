@@ -11,6 +11,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.trendinggitrepos.R
 import com.example.trendinggitrepos.adapters.RepositoryAdapter.RepositoryViewHolder
 import com.example.trendinggitrepos.data.model.RepositoryItem
+import com.example.trendinggitrepos.data.model.test.Item
 import com.example.trendinggitrepos.databinding.RepoListItemBinding
 
 class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryViewHolder>() {
@@ -18,19 +19,19 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
     inner class RepositoryViewHolder(val binding: RepoListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private val diffCallback = object : DiffUtil.ItemCallback<RepositoryItem>() {
-        override fun areItemsTheSame(oldItem: RepositoryItem, newItem: RepositoryItem): Boolean {
+    private val diffCallback = object : DiffUtil.ItemCallback<Item>() {
+        override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: RepositoryItem, newItem: RepositoryItem): Boolean {
+        override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
 
     private val differ = AsyncListDiffer(this, diffCallback)
 
-    fun submitChatList(list: List<RepositoryItem>) = differ.submitList(list)
+    fun submitChatList(list: List<Item>) = differ.submitList(list)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -49,18 +50,24 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
         val view = holder.binding
         val item = differ.currentList[position]
 
-        Glide.with(context).load(item.avatar)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .placeholder(R.drawable.ic_launcher_foreground)
-            .into(view.ivRepoAvatar)
+        if (item.avatars.isNotEmpty()) {
+            Glide.with(context).load(item.avatars[0])
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(view.ivRepoAvatar)
+        } else {
+            Glide.with(context).load(R.drawable.ic_launcher_foreground)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(view.ivRepoAvatar)
+        }
 
-        view.tvAuthorName.text = item.author
-        view.tvRepoName.text = item.name
-        view.tvRepoDesc.text = item.description
+//        view.tvAuthorName.text = item.
+        view.tvRepoName.text = item.repo
+        view.tvRepoDesc.text = item.desc
 
-        Glide.with(context).load(item.languageColor)
-            .into(view.ivLanguageColor)
-        view.tvLanguageName.text = item.language
+//        Glide.with(context).load(item.languageColor)
+//            .into(view.ivLanguageColor)
+//        view.tvLanguageName.text = item.language
 
         view.tvStarCount.text = item.stars.toString()
 

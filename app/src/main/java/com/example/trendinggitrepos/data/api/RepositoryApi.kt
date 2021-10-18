@@ -11,10 +11,8 @@ interface RepositoryApi {
     @GET("/repo")
     suspend fun getRepositories(
         @Query("language")
-        pLanguage: String = "java",
+        pLanguage: String = "",
         @Query("since")
-        since: String = "daily",
-        @Query("spoken_language_code")
-        languageCode: String = "en"
+        since: String = ""
     ): Response<ApiResponse>
 }
