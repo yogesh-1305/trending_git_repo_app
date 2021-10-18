@@ -31,7 +31,7 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
 
     private val differ = AsyncListDiffer(this, diffCallback)
 
-    fun submitChatList(list: List<Item>) = differ.submitList(list)
+    fun submitList(list: List<Item>) = differ.submitList(list)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

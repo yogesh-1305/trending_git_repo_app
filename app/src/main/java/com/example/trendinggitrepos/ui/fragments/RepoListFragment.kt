@@ -8,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.trendinggitrepos.R
 import com.example.trendinggitrepos.adapters.RepositoryAdapter
 import com.example.trendinggitrepos.data.viewModels.RepositoryViewModel
 import com.example.trendinggitrepos.databinding.FragmentRepoListBinding
 import com.example.trendinggitrepos.util.Resource
+import com.example.trendinggitrepos.util.UtilityMethods.hide
+import com.example.trendinggitrepos.util.UtilityMethods.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,11 +32,16 @@ class RepoListFragment : Fragment() {
         setupRecyclerView()
         viewModel.getRepositories()
         viewModel.repositories.observe(viewLifecycleOwner, {
-            Log.i("tag response ===", it.toString())
+
             when (it) {
+                is Resource.Loading -> {
+                    binding.rvRepoList.hide()
+                    binding.shimmerRepoList.show()
+                }
                 is Resource.Success -> {
-                    Log.i("response body ===", it.data.toString())
-                    adapter.submitChatList(it.data!!.items)
+                    binding.shimmerRepoList.hide()
+                    binding.rvRepoList.show()
+                    adapter.submitList(it.data!!.items)
                 }
             }
         })
