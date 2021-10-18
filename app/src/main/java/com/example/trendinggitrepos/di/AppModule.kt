@@ -1,6 +1,7 @@
 package com.example.trendinggitrepos.di
 
 import com.example.trendinggitrepos.data.api.RepositoryApi
+import com.example.trendinggitrepos.data.repositories.RepoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,19 +20,18 @@ object AppModule {
     @Provides
     @Singleton
     fun provideApiInstance(): RepositoryApi {
-        val logging = HttpLoggingInterceptor()
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-
-        val client = OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .build()
 
         return Retrofit.Builder()
-            .baseUrl("https://ghapi.huchen.dev")
+            .baseUrl("https://trendings.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
             .build()
             .create(RepositoryApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRepoRepository(api: RepositoryApi): RepoRepository {
+        return RepoRepository(api)
     }
 
 }
