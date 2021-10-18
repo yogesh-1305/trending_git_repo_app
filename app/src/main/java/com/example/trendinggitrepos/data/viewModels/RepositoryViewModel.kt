@@ -1,5 +1,6 @@
 package com.example.trendinggitrepos.data.viewModels
 
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,9 +24,14 @@ class RepositoryViewModel @Inject constructor(
         MutableLiveData()
     }
 
+    var loadedOnce = false
+
     fun getRepositories() {
         viewModelScope.launch(Dispatchers.IO) {
-            repositories.postValue(Resource.Loading())
+            if (!loadedOnce) {
+                repositories.postValue(Resource.Loading())
+                loadedOnce = true
+            }
             try {
                 val response = repository.getRepositories()
                 repositories.postValue(handleBreakingRepoResponse(response))

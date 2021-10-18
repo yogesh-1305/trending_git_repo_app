@@ -1,6 +1,7 @@
 package com.example.trendinggitrepos.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -13,6 +14,10 @@ import com.example.trendinggitrepos.adapters.RepositoryAdapter.RepositoryViewHol
 import com.example.trendinggitrepos.data.model.RepositoryItem
 import com.example.trendinggitrepos.data.model.test.Item
 import com.example.trendinggitrepos.databinding.RepoListItemBinding
+import com.example.trendinggitrepos.util.LanguageColors
+import com.example.trendinggitrepos.util.LanguageColors.getColor
+import com.example.trendinggitrepos.util.UtilityMethods.gone
+import com.example.trendinggitrepos.util.UtilityMethods.show
 
 class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryViewHolder>() {
 
@@ -61,17 +66,50 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
                 .into(view.ivRepoAvatar)
         }
 
-//        view.tvAuthorName.text = item.
-        view.tvRepoName.text = item.repo
-        view.tvRepoDesc.text = item.desc
+        view.apply {
 
-//        Glide.with(context).load(item.languageColor)
-//            .into(view.ivLanguageColor)
-//        view.tvLanguageName.text = item.language
+            tvAuthorName.text = item.repo.split("/").first()
+            tvRepoName.text = item.repo.split("/").last()
+            tvRepoDesc.text = item.desc
 
-        view.tvStarCount.text = item.stars.toString()
+            val col = Color.parseColor(item.lang.getColor() ?: "#000000")
+            ivLanguageColor.setBackgroundColor(col)
 
-        view.tvForkCount.text = item.forks.toString()
+            tvLanguageName.text = item.lang
+            tvStarCount.text = item.stars
+            tvForkCount.text = item.forks
+
+        }
+        var isExpanded = false
+        view.repoListItemLayout.setOnClickListener {
+            if (!isExpanded) {
+                isExpanded = true
+                view.apply {
+                    ivLanguageColor.show()
+                    ivStar.show()
+                    ivFork.show()
+
+                    tvRepoDesc.show()
+                    tvForkCount.show()
+                    tvStarCount.show()
+                    tvLanguageName.show()
+                    repoListItemLayout.setBackgroundColor(Color.parseColor("#dddddd"))
+                }
+            } else {
+                isExpanded = false
+                view.apply {
+                    ivLanguageColor.gone()
+                    ivStar.gone()
+                    ivFork.gone()
+
+                    tvRepoDesc.gone()
+                    tvForkCount.gone()
+                    tvStarCount.gone()
+                    tvLanguageName.gone()
+                    repoListItemLayout.setBackgroundColor(Color.parseColor("#ffffff"))
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int {

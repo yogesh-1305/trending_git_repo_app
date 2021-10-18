@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/repo_list_item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="12dp">
@@ -17,7 +18,8 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/iv_star"
         app:layout_constraintStart_toEndOf="@+id/iv_star"
-        app:layout_constraintTop_toTopOf="@+id/iv_star" />
+        app:layout_constraintTop_toTopOf="@+id/iv_star"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_fork_count"
@@ -31,7 +33,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/iv_fork"
         app:layout_constraintStart_toEndOf="@+id/iv_fork"
         app:layout_constraintTop_toTopOf="@+id/iv_fork"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintVertical_bias="0.333"
+        tools:visibility="visible" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_star"
@@ -42,7 +45,8 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/tv_language_name"
         app:layout_constraintStart_toEndOf="@+id/tv_language_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_language_name" />
+        app:layout_constraintTop_toTopOf="@+id/tv_language_name"
+        tools:visibility="visible" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_fork"
@@ -53,7 +57,8 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/tv_star_count"
         app:layout_constraintStart_toEndOf="@+id/tv_star_count"
-        app:layout_constraintTop_toTopOf="@+id/tv_star_count" />
+        app:layout_constraintTop_toTopOf="@+id/tv_star_count"
+        tools:visibility="visible" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_repo_avatar"
@@ -67,21 +72,22 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_language_color"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_repo_desc"
         app:layout_constraintTop_toBottomOf="@+id/tv_repo_desc"
-        tools:src="@color/teal_200" />
+        tools:src="@color/teal_200"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_author_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:text="mbinary"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -99,34 +105,39 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/iv_language_color"
         app:layout_constraintStart_toEndOf="@+id/iv_language_color"
-        app:layout_constraintTop_toTopOf="@+id/iv_language_color" />
+        app:layout_constraintTop_toTopOf="@+id/iv_language_color"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_repo_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:maxLines="1"
         android:text="USTC-CS_Courses_Resources"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/iv_repo_avatar"
         app:layout_constraintTop_toBottomOf="@+id/tv_author_name" />
 
     <TextView
         android:id="@+id/tv_repo_desc"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:maxLines="2"
-        android:text="repository description for add just want\nto make it a two line desc"
+        android:text="hello man how are you i ma finr thant hoy hhf kaise ho bhai mere"
         android:textSize="14dp"
         android:textStyle="normal"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/iv_repo_avatar"
-        app:layout_constraintTop_toBottomOf="@+id/tv_repo_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_repo_name"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
