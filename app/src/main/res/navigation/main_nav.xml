@@ -17,10 +17,22 @@
             app:exitAnim="@anim/translate_out_to_left"
             app:popEnterAnim="@anim/translate_in_from_left"
             app:popExitAnim="@anim/translate_out_to_right" />
+        <action
+            android:id="@+id/action_repoListFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.trendinggitrepos.ui.fragments.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.example.trendinggitrepos.ui.fragments.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view" />
 </navigation>
