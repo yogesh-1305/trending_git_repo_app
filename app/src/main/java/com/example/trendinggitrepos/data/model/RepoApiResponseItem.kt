@@ -13,4 +13,20 @@ data class RepoApiResponseItem(
     val totalStars: Int? = 0,
     val url: String? = "",
     val username: String? = ""
-)
+) {
+    companion object {
+        fun RepoApiResponseItem.toCustomRepository(): CustomRepository {
+            return CustomRepository(
+                builtBy = this.builtBy[0].avatar ?: "",
+                username = username,
+                repositoryName = repositoryName,
+                description = description,
+                forks = forks,
+                totalStars = totalStars,
+                language = language,
+                languageColor = languageColor
+            )
+        }
+    }
+}
+

@@ -32,7 +32,11 @@
     </fragment>
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="com.example.trendinggitrepos.ui.fragments.WebViewFragment"
+        android:name="com.example.trendinggitrepos."
         android:label="fragment_web_view"
-        tools:layout="@layout/fragment_web_view" />
+        tools:layout="@layout/fragment_web_view" >
+        <argument
+            android:name="customRepository"
+            app:argType="com.example.trendinggitrepos.data.model.CustomRepository" />
+    </fragment>
 </navigation>
