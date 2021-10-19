@@ -35,9 +35,9 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener {
         setupRecyclerView()
 
         viewModel.searchResults.observe(viewLifecycleOwner, {
-            it?.let {
+            it.let {
                 adapter.submitList(it)
-                Log.i("search repo ---", it.toString())
+                binding.searchProgressIndicator.hide()
             }
         })
 
@@ -53,8 +53,8 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener {
 
     override fun onEditorAction(view: TextView?, actionId: Int, event: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            binding.searchProgressIndicator.show()
             val typedText = binding.etSearch.text
-
             viewModel.getRepoByLanguage(typedText.toString())
             return true
         }
