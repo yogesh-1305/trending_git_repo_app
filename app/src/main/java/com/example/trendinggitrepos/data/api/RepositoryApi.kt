@@ -1,18 +1,14 @@
 package com.example.trendinggitrepos.data.api
 
-import com.example.trendinggitrepos.data.model.RepositoryItem
-import com.example.trendinggitrepos.data.model.test.ApiResponse
-import retrofit2.Response
+import com.example.trendinggitrepos.data.model.RepoApiResponseItem
 import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.Path
 
 interface RepositoryApi {
 
-    @GET("/repo")
-    suspend fun getRepositories(
-        @Query("language")
-        pLanguage: String = "",
-        @Query("since")
-        since: String = ""
-    ): Response<ApiResponse>
+    @GET("/repositories")
+    suspend fun getRepositories(): List<RepoApiResponseItem>
+
+    @GET("/repositories/{language}")
+    suspend fun getRepoByLang(@Path("language") language: String?): List<RepoApiResponseItem>
 }
