@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var destinationChangedListener: NavController.OnDestinationChangedListener
 
-    private lateinit var animation: Animation
+//    private lateinit var animation: Animation
 
     private var buttonState: FabState = FabState.ON_REPO_FRAGMENT
 
@@ -41,37 +41,70 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        animation = AnimationUtils.loadAnimation(this, R.anim.fab_expolsion_animation).apply {
-            duration = 800
-            interpolator = AccelerateDecelerateInterpolator()
-        }
+//        animation = AnimationUtils.loadAnimation(this, R.anim.fab_expolsion_animation).apply {
+//            duration = 800
+//            interpolator = AccelerateDecelerateInterpolator()
+//        }
 
         navController = findNavController(R.id.fragmentContainerView)
         destinationChangedListener =
             NavController.OnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.repoListFragment -> {
-                        buttonState = FabState.ON_REPO_FRAGMENT
-                        binding.fabSearch.setImageResource(R.drawable.ic_baseline_search_24)
-                        binding.toolbar.navigationIcon = null
-                        binding.fabSearch.show()
-                        binding.toolbar.title = "Trending"
+                        alterViewsForRepoListFragment()
                     }
                     R.id.searchFragment -> {
-                        binding.toolbar.title = "Search"
-                        binding.fabSearch.gone()
-                        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+                        alterViewsForSearchFragment()
                     }
                     R.id.webViewFragment -> {
-                        buttonState = FabState.ON_WEB_VIEW_FRAGMENT
-                        binding.fabSearch.hide()
-                        binding.toolbar.title = "Repository"
-                        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+                        alterViewsForWebViewFragment()
+                    }
+                    R.id.starredRepoFragment -> {
+                        alterViewsForStarredRepoFragment()
                     }
                 }
             }
 
         setClickListeners()
+    }
+
+
+    private fun alterViewsForRepoListFragment() {
+        buttonState = FabState.ON_REPO_FRAGMENT
+        binding.fabSearch.apply {
+            setImageResource(R.drawable.ic_baseline_search_24)
+            show()
+        }
+        binding.toolbar.apply {
+            navigationIcon = null
+            title = "Trending"
+        }
+    }
+
+    private fun alterViewsForSearchFragment() {
+        binding.fabSearch.gone()
+        binding.toolbar.apply {
+            title = "Search"
+            setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        }
+    }
+
+    private fun alterViewsForWebViewFragment() {
+        buttonState = FabState.ON_WEB_VIEW_FRAGMENT
+        binding.fabSearch.hide()
+        binding.toolbar.apply {
+            title = "Repository Web"
+            setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+        }
+    }
+
+    private fun alterViewsForStarredRepoFragment() {
+        binding.fabSearch.hide()
+        binding.toolbar.apply {
+            title = "Starred Repositories"
+            setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+
+        }
     }
 
     private fun setClickListeners() {
