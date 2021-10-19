@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trendinggitrepos.data.model.RepoApiResponseItem
-import com.example.trendinggitrepos.data.model.test.ApiResponse
 import com.example.trendinggitrepos.data.repositories.RepoRepository
 import com.example.trendinggitrepos.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,21 +25,19 @@ class RepositoryViewModel @Inject constructor(
     var loadedOnce = false
 
     fun getRepositories() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             try {
-                repositories.postValue(repository.getRepositories())
+                val response = repository.getRepositories()
+                setValue(response)
+
             }catch (e: IOException){
                 e.printStackTrace()
             }
         }
     }
 
-    private fun handleBreakingRepoResponse(response: Response<ApiResponse>): Resource<ApiResponse> {
-        if (response.isSuccessful) {
-            response.body()?.let { result ->
-                return Resource.Success(result)
-            }
-        }
-        return Resource.Error(response.message())
+    private fun setValue(response: List<RepoApiResponseItem>) {
+        repositories.value = response
     }
+
 }
