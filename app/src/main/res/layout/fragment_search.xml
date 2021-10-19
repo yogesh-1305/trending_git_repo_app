@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"
+        android:visibility="invisible"
         app:indeterminateAnimationType="disjoint"
-        app:indicatorColor="@color/black"
-        android:visibility="invisible" />
+        app:indicatorColor="@color/black" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
@@ -33,20 +33,36 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_search"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:contextClickable="true"
-            android:cursorVisible="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"/>
+            android:contextClickable="true"
+            android:cursorVisible="true"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_search"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_anchor="@id/textInputLayout"
-        app:layout_anchorGravity="bottom"
-        android:visibility="visible" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            app:layout_anchor="@id/textInputLayout"
+            app:layout_anchorGravity="bottom" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_anim_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            app:lottie_rawRes="@raw/lottie_anim_search"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:visibility="visible"/>
+    </FrameLayout>
+
+
 </LinearLayout>

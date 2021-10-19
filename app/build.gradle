@@ -100,6 +100,9 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    //Lottie Animations
+    implementation "com.airbnb.android:lottie:3.6.0"
 }
 
 kapt {

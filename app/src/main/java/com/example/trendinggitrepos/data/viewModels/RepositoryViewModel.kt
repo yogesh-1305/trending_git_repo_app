@@ -1,5 +1,6 @@
 package com.example.trendinggitrepos.data.viewModels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,7 +23,7 @@ class RepositoryViewModel @Inject constructor(
         MutableLiveData()
     }
 
-    val searchResults: MutableLiveData<List<RepoApiResponseItem>> by lazy {
+    val searchResults: MutableLiveData<List<RepoApiResponseItem>?> by lazy {
         MutableLiveData()
     }
 
@@ -49,6 +50,7 @@ class RepositoryViewModel @Inject constructor(
                 searchResults.postValue(response)
             } catch (e: Exception) {
                 e.printStackTrace()
+                searchResults.postValue(null)
             }
         }
     }
