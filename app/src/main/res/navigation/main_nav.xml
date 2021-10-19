@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_repo_list" >
         <action
             android:id="@+id/action_repoListFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/translate_in_from_right"
+            app:exitAnim="@anim/translate_out_to_left"
+            app:popEnterAnim="@anim/translate_in_from_left"
+            app:popExitAnim="@anim/translate_out_to_right" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
