@@ -1,7 +1,5 @@
 package com.example.trendinggitrepos.data.model
 
-import com.example.trendinggitrepos.data.model.entity.CustomRepository
-
 data class RepoApiResponseItem(
     val builtBy: List<BuiltBy>,
     val description: String? = "",

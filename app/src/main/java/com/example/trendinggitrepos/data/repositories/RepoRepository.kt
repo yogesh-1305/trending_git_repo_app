@@ -2,10 +2,8 @@ package com.example.trendinggitrepos.data.repositories
 
 import androidx.lifecycle.LiveData
 import com.example.trendinggitrepos.data.api.RepositoryApi
-import com.example.trendinggitrepos.data.model.entity.CustomRepository
+import com.example.trendinggitrepos.data.model.CustomRepository
 import com.example.trendinggitrepos.db.DatabaseDao
-import dagger.hilt.android.AndroidEntryPoint
-import java.security.PrivateKey
 import javax.inject.Inject
 
 class RepoRepository @Inject constructor(

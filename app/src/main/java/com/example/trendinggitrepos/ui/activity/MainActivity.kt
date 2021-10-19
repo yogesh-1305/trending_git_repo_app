@@ -14,6 +14,7 @@ import com.example.trendinggitrepos.R
 import com.example.trendinggitrepos.data.api.RepositoryApi
 import com.example.trendinggitrepos.data.viewModels.RepositoryViewModel
 import com.example.trendinggitrepos.databinding.ActivityMainBinding
+import com.example.trendinggitrepos.ui.fragments.WebViewFragment
 import com.example.trendinggitrepos.util.Resource
 import com.example.trendinggitrepos.util.UtilityMethods.gone
 import com.example.trendinggitrepos.util.UtilityMethods.hide
@@ -33,6 +34,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var animation: Animation
 
+    private var buttonState: FabState = FabState.ON_REPO_FRAGMENT
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -48,6 +51,8 @@ class MainActivity : AppCompatActivity() {
             NavController.OnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.repoListFragment -> {
+                        buttonState = FabState.ON_REPO_FRAGMENT
+                        binding.fabSearch.setImageResource(R.drawable.ic_baseline_search_24)
                         binding.toolbar.navigationIcon = null
                         binding.fabSearch.show()
                         binding.toolbar.title = "Trending"
@@ -58,7 +63,8 @@ class MainActivity : AppCompatActivity() {
                         binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
                     }
                     R.id.webViewFragment -> {
-                        binding.fabSearch.gone()
+                        buttonState = FabState.ON_WEB_VIEW_FRAGMENT
+                        binding.fabSearch.hide()
                         binding.toolbar.title = "Repository"
                         binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
                     }
@@ -70,11 +76,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun setClickListeners() {
         binding.fabSearch.setOnClickListener {
-            it.hide()
-            navController.navigate(R.id.action_repoListFragment_to_searchFragment)
+            when (buttonState) {
+                FabState.ON_REPO_FRAGMENT -> {
+                    it.hide()
+                    navController.navigate(R.id.action_repoListFragment_to_searchFragment)
 //            binding.animView.startAnimation(animation) {
 //                // after animation ends -> do something
 //            }
+                }
+                FabState.ON_WEB_VIEW_FRAGMENT -> {
+                    val repo = WebViewFragment.getRepoToSave()
+                    viewModel.saveRepoToDB(repo)
+                }
+            }
+
         }
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
@@ -90,4 +105,9 @@ class MainActivity : AppCompatActivity() {
         navController.removeOnDestinationChangedListener(destinationChangedListener)
         super.onPause()
     }
+}
+
+enum class FabState {
+    ON_REPO_FRAGMENT,
+    ON_WEB_VIEW_FRAGMENT
 }

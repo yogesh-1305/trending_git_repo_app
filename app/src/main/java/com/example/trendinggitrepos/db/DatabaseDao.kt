@@ -2,7 +2,7 @@ package com.example.trendinggitrepos.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.trendinggitrepos.data.model.entity.CustomRepository
+import com.example.trendinggitrepos.data.model.CustomRepository
 
 @Dao
 interface DatabaseDao {

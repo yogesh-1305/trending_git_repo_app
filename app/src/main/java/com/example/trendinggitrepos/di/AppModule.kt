@@ -34,7 +34,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDatabaseDao(db: AppDatabase) = db.dbDao()
+    fun provideDatabaseDao(db: AppDatabase): DatabaseDao = db.dbDao()
 
     @Provides
     @Singleton
@@ -63,8 +63,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRepoRepository(api: RepositoryApi): RepoRepository {
-        return RepoRepository(api)
+    fun provideRepoRepository(api: RepositoryApi, dao: DatabaseDao): RepoRepository {
+        return RepoRepository(api, dao)
     }
 
 }

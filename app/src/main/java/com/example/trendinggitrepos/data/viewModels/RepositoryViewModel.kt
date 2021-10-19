@@ -1,18 +1,14 @@
 package com.example.trendinggitrepos.data.viewModels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trendinggitrepos.data.model.RepoApiResponseItem
-import com.example.trendinggitrepos.data.model.entity.CustomRepository
+import com.example.trendinggitrepos.data.model.CustomRepository
 import com.example.trendinggitrepos.data.repositories.RepoRepository
-import com.example.trendinggitrepos.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import java.io.IOException
 import javax.inject.Inject
 
@@ -34,7 +30,7 @@ class RepositoryViewModel @Inject constructor(
     val readAllRepositories: LiveData<List<CustomRepository>> = repository.readAllRepositories
 
 
-    //------------ methods -----------------------------------------------------------------
+    //------------ methods (API) -----------------------------------------------------------------
 
     fun getRepositories() {
         viewModelScope.launch {
@@ -42,7 +38,7 @@ class RepositoryViewModel @Inject constructor(
                 val response = repository.getRepositories()
                 setValue(response)
 
-            }catch (e: IOException){
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
@@ -64,4 +60,11 @@ class RepositoryViewModel @Inject constructor(
         }
     }
 
+    //------------ methods (DB) -----------------------------------------------------------------
+
+    fun saveRepoToDB(repo: CustomRepository) {
+        viewModelScope.launch {
+            repository.insertRepo(repo)
+        }
+    }
 }
