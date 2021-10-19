@@ -3,6 +3,7 @@ package com.example.trendinggitrepos.ui.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -14,6 +15,7 @@ import com.example.trendinggitrepos.data.api.RepositoryApi
 import com.example.trendinggitrepos.data.viewModels.RepositoryViewModel
 import com.example.trendinggitrepos.databinding.ActivityMainBinding
 import com.example.trendinggitrepos.util.Resource
+import com.example.trendinggitrepos.util.UtilityMethods.gone
 import com.example.trendinggitrepos.util.UtilityMethods.hide
 import com.example.trendinggitrepos.util.startAnimation
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,16 +48,19 @@ class MainActivity : AppCompatActivity() {
             NavController.OnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
                     R.id.repoListFragment -> {
-                        Log.d("On fragment===", "Home")
                         binding.toolbar.navigationIcon = null
                         binding.fabSearch.show()
                         binding.toolbar.title = "Trending"
                     }
                     R.id.searchFragment -> {
-                        Log.d("On fragment===", "Search")
                         binding.toolbar.title = "Search"
+                        binding.fabSearch.gone()
                         binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
-
+                    }
+                    R.id.webViewFragment -> {
+                        binding.fabSearch.gone()
+                        binding.toolbar.title = "Repository"
+                        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
                     }
                 }
             }

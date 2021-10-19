@@ -24,7 +24,8 @@ data class RepoApiResponseItem(
                 forks = forks,
                 totalStars = totalStars,
                 language = language,
-                languageColor = languageColor
+                languageColor = languageColor,
+                url = url
             )
         }
     }

@@ -11,4 +11,5 @@ data class CustomRepository(
     val totalStars: Int? = 0,
     val language: String? = "",
     val languageColor: String? = "",
+    val url: String? = ""
 ) : Serializable
