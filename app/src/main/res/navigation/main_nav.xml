@@ -39,4 +39,16 @@
             android:name="customRepository"
             app:argType="com.example.trendinggitrepos.data.model.CustomRepository" />
     </fragment>
+    <fragment
+        android:id="@+id/starredRepoFragment"
+        android:name="com.example.trendinggitrepos.starredRepoFragment"
+        android:label="fragment_starred_repo"
+        tools:layout="@layout/fragment_starred_repo" />
+    <action
+        android:id="@+id/action_global_starredRepoFragment"
+        app:destination="@id/starredRepoFragment"
+        app:enterAnim="@anim/translate_in_from_left"
+        app:exitAnim="@anim/translate_out_to_left"
+        app:popEnterAnim="@anim/translate_in_from_left"
+        app:popExitAnim="@anim/translate_out_to_right" />
 </navigation>

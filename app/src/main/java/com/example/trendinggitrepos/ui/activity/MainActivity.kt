@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_saved_repos -> {
-                    // navigate to saved repo fragment
+                    navController.navigate(R.id.action_global_starredRepoFragment)
                 }
             }
             true
