@@ -1,8 +1,12 @@
 package com.example.trendinggitrepos.di
 
 import android.content.Context
+import androidx.room.Room
+import com.example.trendinggitrepos.constants.Constants.DATABASE_NAME
 import com.example.trendinggitrepos.data.api.RepositoryApi
 import com.example.trendinggitrepos.data.repositories.RepoRepository
+import com.example.trendinggitrepos.db.AppDatabase
+import com.example.trendinggitrepos.db.DatabaseDao
 import com.example.trendinggitrepos.util.UtilityMethods.hasNetwork
 import dagger.Module
 import dagger.Provides
@@ -20,6 +24,17 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Singleton
+    @Provides
+    fun provideDatabaseInstance(@ApplicationContext context: Context) = Room.databaseBuilder(
+        context, AppDatabase::class.java,
+        DATABASE_NAME
+    ).build()
+
+    @Singleton
+    @Provides
+    fun provideDatabaseDao(db: AppDatabase) = db.dbDao()
 
     @Provides
     @Singleton

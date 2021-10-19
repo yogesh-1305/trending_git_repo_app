@@ -6,4 +6,6 @@ import com.example.trendinggitrepos.data.model.entity.CustomRepository
 
 @Database(entities = [CustomRepository::class], version = 1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
+
+    abstract fun dbDao(): DatabaseDao
 }
