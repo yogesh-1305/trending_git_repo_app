@@ -24,4 +24,6 @@ class RepoRepository @Inject constructor(
     //------------ methods (DATABASE) ------------------------------------------------------------
 
     suspend fun insertRepo(repo: CustomRepository) = dao.insertRepo(repo)
+
+    suspend fun deleteRepo(repo: CustomRepository) = dao.deleteRepo(repo)
 }

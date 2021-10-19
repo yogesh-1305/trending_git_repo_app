@@ -67,4 +67,10 @@ class RepositoryViewModel @Inject constructor(
             repository.insertRepo(repo)
         }
     }
+
+    fun deleteRepo(repo: CustomRepository) {
+        viewModelScope.launch {
+            repository.deleteRepo(repo)
+        }
+    }
 }
