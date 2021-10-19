@@ -3,11 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_sort"
-        android:title="Sort By">
-
-        <menu>
-        </menu>
+        android:id="@+id/action_saved_repos"
+        android:title="Starred Repositories">
 
     </item>
 </menu>
