@@ -2,8 +2,12 @@ package com.example.trendinggitrepos.adapters
 
 import android.content.Context
 import android.graphics.Color
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,12 +15,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.trendinggitrepos.R
 import com.example.trendinggitrepos.adapters.RepositoryAdapter.RepositoryViewHolder
+import com.example.trendinggitrepos.constants.Constants.REPO_LIST_FRAGMENT_ID
+import com.example.trendinggitrepos.constants.Constants.SEARCH_LIST_FRAGMENT_ID
 import com.example.trendinggitrepos.data.model.RepoApiResponseItem
 import com.example.trendinggitrepos.databinding.RepoListItemBinding
+import com.example.trendinggitrepos.ui.fragments.RepoListFragment
 import com.example.trendinggitrepos.util.UtilityMethods.gone
 import com.example.trendinggitrepos.util.UtilityMethods.show
 
-class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryViewHolder>() {
+class RepositoryAdapter(val context: Context, val fragmentId: Int) :
+    RecyclerView.Adapter<RepositoryViewHolder>() {
 
     inner class RepositoryViewHolder(val binding: RepoListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -74,7 +82,10 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
             tvAuthorName.text = item.username
             tvRepoName.text = item.repositoryName
             tvRepoDesc.text = item.description
-            tvRepoLink.text = item.url
+
+            val content = SpannableString(item.url)
+            content.setSpan(UnderlineSpan(), 0, item.url!!.length, 0)
+            tvRepoLink.text = content
 
             val col = Color.parseColor(item.languageColor ?: "#000000")
             ivLanguageColor.setBackgroundColor(col)
@@ -84,6 +95,17 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
             tvForkCount.text = item.forks.toString()
 
         }
+
+        view.tvRepoLink.setOnClickListener {
+            if (fragmentId == REPO_LIST_FRAGMENT_ID) {
+                view.root.findNavController()
+                    .navigate(R.id.action_repoListFragment_to_webViewFragment)
+            }else if (fragmentId == SEARCH_LIST_FRAGMENT_ID) {
+                view.root.findNavController()
+                    .navigate(R.id.action_searchFragment_to_webViewFragment)
+            }
+        }
+
         var isExpanded = false
         view.repoListItemLayout.setOnClickListener {
             if (!isExpanded) {

@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.trendinggitrepos.adapters.RepositoryAdapter
+import com.example.trendinggitrepos.constants.Constants.REPO_LIST_FRAGMENT_ID
 import com.example.trendinggitrepos.data.viewModels.RepositoryViewModel
 import com.example.trendinggitrepos.databinding.FragmentRepoListBinding
 import com.example.trendinggitrepos.util.Resource
@@ -65,7 +66,7 @@ class RepoListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() = binding.rvRepoList.apply {
-        this@RepoListFragment.adapter = RepositoryAdapter(context)
+        this@RepoListFragment.adapter = RepositoryAdapter(context, REPO_LIST_FRAGMENT_ID)
         this.adapter = this@RepoListFragment.adapter
         layoutManager = LinearLayoutManager(requireContext())
     }

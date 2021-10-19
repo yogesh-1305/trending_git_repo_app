@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trendinggitrepos.R
 import com.example.trendinggitrepos.adapters.RepositoryAdapter
+import com.example.trendinggitrepos.constants.Constants.SEARCH_LIST_FRAGMENT_ID
 import com.example.trendinggitrepos.data.viewModels.RepositoryViewModel
 import com.example.trendinggitrepos.databinding.FragmentSearchBinding
 import com.example.trendinggitrepos.util.UtilityMethods.hide
@@ -46,7 +47,7 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun setupRecyclerView() = binding.rvSearch.apply {
-        this@SearchFragment.adapter = RepositoryAdapter(context)
+        this@SearchFragment.adapter = RepositoryAdapter(context, SEARCH_LIST_FRAGMENT_ID)
         this.adapter = this@SearchFragment.adapter
         layoutManager = LinearLayoutManager(requireContext())
     }
