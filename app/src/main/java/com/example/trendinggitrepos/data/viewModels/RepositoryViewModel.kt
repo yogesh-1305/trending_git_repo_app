@@ -47,7 +47,7 @@ class RepositoryViewModel @Inject constructor(
             try {
                 val response = repository.getRepoByLanguage(language)
                 searchResults.postValue(response)
-            } catch (e: IOException) {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
