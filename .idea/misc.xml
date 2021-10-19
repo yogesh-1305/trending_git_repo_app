@@ -5,11 +5,12 @@
       <map>
         <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/drawable/circle_drawable.xml" value="0.189453125" />
         <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/drawable/circle_frawable.xml" value="0.189453125" />
+        <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/drawable/ripple_effect.xml" value="0.189453125" />
         <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/layout/fragment_repo_list.xml" value="0.17734375" />
         <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/layout/fragment_search.xml" value="0.17734375" />
         <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/layout/repo_list_header.xml" value="0.17734375" />
-        <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/layout/repo_list_item.xml" value="0.4" />
+        <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/layout/repo_list_item.xml" value="0.4587628865979381" />
         <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/layout/repo_list_item_detail.xml" value="0.4" />
         <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/layout/shimmer_placeholder_layout.xml" value="0.17734375" />
         <entry key="..\:/Users/sashu/AndroidStudioProjects/TrendingGitRepos/app/src/main/res/menu/app_menu.xml" value="0.17734375" />

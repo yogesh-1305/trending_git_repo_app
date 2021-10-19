@@ -5,6 +5,7 @@
     android:id="@+id/repo_list_item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/ripple_effect"
     android:padding="12dp">
 
     <TextView
@@ -78,8 +79,8 @@
         android:layout_marginBottom="16dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tv_repo_desc"
-        app:layout_constraintTop_toBottomOf="@+id/tv_repo_desc"
+        app:layout_constraintStart_toStartOf="@+id/tv_repo_link"
+        app:layout_constraintTop_toBottomOf="@+id/tv_repo_link"
         tools:src="@color/teal_200"
         tools:visibility="visible" />
 
@@ -138,6 +139,27 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/iv_repo_avatar"
         app:layout_constraintTop_toBottomOf="@+id/tv_repo_name"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_repo_link"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:autoLink="web"
+        android:clickable="true"
+        android:contextClickable="true"
+        android:linksClickable="true"
+        android:maxLines="1"
+        android:text="https://github.com/WorkerLivesMatter/WorkingTime"
+        android:textSize="14dp"
+        android:textStyle="normal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/iv_repo_avatar"
+        app:layout_constraintTop_toBottomOf="@+id/tv_repo_desc"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,11 +22,17 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
         RecyclerView.ViewHolder(binding.root)
 
     private val diffCallback = object : DiffUtil.ItemCallback<RepoApiResponseItem>() {
-        override fun areItemsTheSame(oldItem: RepoApiResponseItem, newItem: RepoApiResponseItem): Boolean {
+        override fun areItemsTheSame(
+            oldItem: RepoApiResponseItem,
+            newItem: RepoApiResponseItem
+        ): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: RepoApiResponseItem, newItem: RepoApiResponseItem): Boolean {
+        override fun areContentsTheSame(
+            oldItem: RepoApiResponseItem,
+            newItem: RepoApiResponseItem
+        ): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
@@ -53,7 +59,7 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
         val item = differ.currentList[position]
 
         if (item.builtBy.isNotEmpty()) {
-            Glide.with(context).load(item.builtBy[0].avatar)
+            Glide.with(context).load(item.builtBy[0].avatar ?: R.drawable.ic_launcher_foreground)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(view.ivRepoAvatar)
@@ -68,6 +74,7 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
             tvAuthorName.text = item.username
             tvRepoName.text = item.repositoryName
             tvRepoDesc.text = item.description
+            tvRepoLink.text = item.url
 
             val col = Color.parseColor(item.languageColor ?: "#000000")
             ivLanguageColor.setBackgroundColor(col)
@@ -81,35 +88,45 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
         view.repoListItemLayout.setOnClickListener {
             if (!isExpanded) {
                 isExpanded = true
-                view.apply {
-                    ivLanguageColor.show()
-                    ivStar.show()
-                    ivFork.show()
-
-                    tvRepoDesc.show()
-                    tvForkCount.show()
-                    tvStarCount.show()
-                    tvLanguageName.show()
-                    repoListItemLayout.setBackgroundColor(Color.parseColor("#dddddd"))
-                }
+                expandItem(view)
             } else {
                 isExpanded = false
-                view.apply {
-                    ivLanguageColor.gone()
-                    ivStar.gone()
-                    ivFork.gone()
-
-                    tvRepoDesc.gone()
-                    tvForkCount.gone()
-                    tvStarCount.gone()
-                    tvLanguageName.gone()
-                    repoListItemLayout.setBackgroundColor(Color.parseColor("#ffffff"))
-                }
+                collapseItem(view)
             }
         }
     }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
+    }
+
+    private fun expandItem(view: RepoListItemBinding) {
+        view.apply {
+            ivLanguageColor.show()
+            ivStar.show()
+            ivFork.show()
+
+            tvRepoLink.show()
+            tvRepoDesc.show()
+            tvForkCount.show()
+            tvStarCount.show()
+            tvLanguageName.show()
+            repoListItemLayout.setBackgroundColor(Color.parseColor("#dddddd"))
+        }
+    }
+
+    private fun collapseItem(view: RepoListItemBinding) {
+        view.apply {
+            ivLanguageColor.gone()
+            ivStar.gone()
+            ivFork.gone()
+
+            tvRepoLink.gone()
+            tvRepoDesc.gone()
+            tvForkCount.gone()
+            tvStarCount.gone()
+            tvLanguageName.gone()
+            repoListItemLayout.setBackgroundColor(Color.parseColor("#ffffff"))
+        }
     }
 }
