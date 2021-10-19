@@ -1,10 +1,12 @@
 package com.example.trendinggitrepos.data.viewModels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trendinggitrepos.data.model.RepoApiResponseItem
+import com.example.trendinggitrepos.data.model.entity.CustomRepository
 import com.example.trendinggitrepos.data.repositories.RepoRepository
 import com.example.trendinggitrepos.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +21,8 @@ class RepositoryViewModel @Inject constructor(
     private val repository: RepoRepository
 ) : ViewModel() {
 
+    // ---------- variables ---------------------------------------------------------------
+
     val repositories: MutableLiveData<List<RepoApiResponseItem>> by lazy {
         MutableLiveData()
     }
@@ -26,6 +30,11 @@ class RepositoryViewModel @Inject constructor(
     val searchResults: MutableLiveData<List<RepoApiResponseItem>?> by lazy {
         MutableLiveData()
     }
+
+    val readAllRepositories: LiveData<List<CustomRepository>> = repository.readAllRepositories
+
+
+    //------------ methods -----------------------------------------------------------------
 
     fun getRepositories() {
         viewModelScope.launch {
