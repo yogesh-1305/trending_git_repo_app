@@ -22,7 +22,9 @@ class RepositoryViewModel @Inject constructor(
         MutableLiveData()
     }
 
-    var loadedOnce = false
+    val searchResults: MutableLiveData<List<RepoApiResponseItem>> by lazy {
+        MutableLiveData()
+    }
 
     fun getRepositories() {
         viewModelScope.launch {
@@ -38,6 +40,17 @@ class RepositoryViewModel @Inject constructor(
 
     private fun setValue(response: List<RepoApiResponseItem>) {
         repositories.value = response
+    }
+
+    fun getRepoByLanguage(language: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.getRepoByLanguage(language)
+                searchResults.postValue(response)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
 
 }

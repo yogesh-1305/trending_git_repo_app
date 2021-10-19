@@ -8,4 +8,6 @@ class RepoRepository @Inject constructor(
     private val api: RepositoryApi
 ) {
     suspend fun getRepositories() = api.getRepositories()
+
+    suspend fun getRepoByLanguage(language: String) = api.getRepoByLang(language)
 }
