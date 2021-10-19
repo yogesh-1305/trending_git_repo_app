@@ -66,7 +66,7 @@ class RepoListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() = binding.rvRepoList.apply {
-        this@RepoListFragment.adapter = RepositoryAdapter(context, REPO_LIST_FRAGMENT_ID)
+        this@RepoListFragment.adapter = RepositoryAdapter(requireActivity(), REPO_LIST_FRAGMENT_ID)
         this.adapter = this@RepoListFragment.adapter
         layoutManager = LinearLayoutManager(requireContext())
     }

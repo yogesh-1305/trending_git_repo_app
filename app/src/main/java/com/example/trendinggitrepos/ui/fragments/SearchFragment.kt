@@ -47,7 +47,7 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener {
     }
 
     private fun setupRecyclerView() = binding.rvSearch.apply {
-        this@SearchFragment.adapter = RepositoryAdapter(context, SEARCH_LIST_FRAGMENT_ID)
+        this@SearchFragment.adapter = RepositoryAdapter(requireActivity(), SEARCH_LIST_FRAGMENT_ID)
         this.adapter = this@SearchFragment.adapter
         layoutManager = LinearLayoutManager(requireContext())
     }

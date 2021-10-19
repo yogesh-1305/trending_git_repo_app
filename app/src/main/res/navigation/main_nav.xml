@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/webViewFragment"
-        android:name="com.example.trendinggitrepos."
+        android:name="com.example.trendinggitrepos.ui.fragments.WebViewFragment"
         android:label="fragment_web_view"
         tools:layout="@layout/fragment_web_view" >
         <argument
