@@ -35,9 +35,16 @@ class MainActivity : AppCompatActivity() {
                 when (destination.id) {
                     R.id.repoListFragment -> {
                         Log.d("On fragment===", "Home")
+                        binding.toolbar.navigationIcon = null
+                        binding.fabSearch.show()
+                        binding.toolbar.title = "Trending"
                     }
                     R.id.searchFragment -> {
                         Log.d("On fragment===", "Search")
+                        binding.toolbar.title = "Search"
+                        binding.toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24)
+                        binding.fabSearch.hide()
+
                     }
                 }
             }
@@ -48,6 +55,9 @@ class MainActivity : AppCompatActivity() {
     private fun setClickListeners() {
         binding.fabSearch.setOnClickListener {
             navController.navigate(R.id.action_repoListFragment_to_searchFragment)
+        }
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed()
         }
     }
 
