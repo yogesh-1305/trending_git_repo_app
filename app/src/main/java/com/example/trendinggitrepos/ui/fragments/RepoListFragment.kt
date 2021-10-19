@@ -33,21 +33,16 @@ class RepoListFragment : Fragment() {
         viewModel.getRepositories()
         viewModel.repositories.observe(viewLifecycleOwner, {
 
-            when (it) {
-                is Resource.Loading -> {
-                    binding.rvRepoList.hide()
-                    binding.shimmerRepoList.show()
-                }
-                is Resource.Success -> {
-                    binding.shimmerRepoList.hide()
-                    binding.rvRepoList.show()
-                    adapter.submitList(it.data!!.items)
-                }
+            it?.let {
+                adapter.submitList(it)
+                binding.shimmerRepoList.hide()
+                binding.rvRepoList.show()
             }
         })
 
         return binding.root
     }
+
     private fun setupRecyclerView() = binding.rvRepoList.apply {
         this@RepoListFragment.adapter = RepositoryAdapter(context)
         this.adapter = this@RepoListFragment.adapter

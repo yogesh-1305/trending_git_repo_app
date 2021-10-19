@@ -1,10 +1,9 @@
 package com.example.trendinggitrepos.data.viewModels
 
-import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.trendinggitrepos.data.model.RepositoryItem
+import com.example.trendinggitrepos.data.model.RepoApiResponseItem
 import com.example.trendinggitrepos.data.model.test.ApiResponse
 import com.example.trendinggitrepos.data.repositories.RepoRepository
 import com.example.trendinggitrepos.util.Resource
@@ -12,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import java.lang.Exception
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +19,7 @@ class RepositoryViewModel @Inject constructor(
     private val repository: RepoRepository
 ) : ViewModel() {
 
-    val repositories: MutableLiveData<Resource<ApiResponse>> by lazy {
+    val repositories: MutableLiveData<List<RepoApiResponseItem>> by lazy {
         MutableLiveData()
     }
 
@@ -28,14 +27,9 @@ class RepositoryViewModel @Inject constructor(
 
     fun getRepositories() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (!loadedOnce) {
-                repositories.postValue(Resource.Loading())
-                loadedOnce = true
-            }
             try {
-                val response = repository.getRepositories()
-                repositories.postValue(handleBreakingRepoResponse(response))
-            } catch (e: Exception) {
+                repositories.postValue(repository.getRepositories())
+            }catch (e: IOException){
                 e.printStackTrace()
             }
         }

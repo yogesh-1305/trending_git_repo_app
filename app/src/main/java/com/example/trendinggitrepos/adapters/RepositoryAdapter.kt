@@ -11,11 +11,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.trendinggitrepos.R
 import com.example.trendinggitrepos.adapters.RepositoryAdapter.RepositoryViewHolder
-import com.example.trendinggitrepos.data.model.RepositoryItem
-import com.example.trendinggitrepos.data.model.test.Item
+import com.example.trendinggitrepos.data.model.RepoApiResponseItem
 import com.example.trendinggitrepos.databinding.RepoListItemBinding
-import com.example.trendinggitrepos.util.LanguageColors
-import com.example.trendinggitrepos.util.LanguageColors.getColor
 import com.example.trendinggitrepos.util.UtilityMethods.gone
 import com.example.trendinggitrepos.util.UtilityMethods.show
 
@@ -24,19 +21,19 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
     inner class RepositoryViewHolder(val binding: RepoListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Item>() {
-        override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean {
+    private val diffCallback = object : DiffUtil.ItemCallback<RepoApiResponseItem>() {
+        override fun areItemsTheSame(oldItem: RepoApiResponseItem, newItem: RepoApiResponseItem): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean {
+        override fun areContentsTheSame(oldItem: RepoApiResponseItem, newItem: RepoApiResponseItem): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
     }
 
     private val differ = AsyncListDiffer(this, diffCallback)
 
-    fun submitList(list: List<Item>) = differ.submitList(list)
+    fun submitList(list: List<RepoApiResponseItem>) = differ.submitList(list)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -55,8 +52,8 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
         val view = holder.binding
         val item = differ.currentList[position]
 
-        if (item.avatars.isNotEmpty()) {
-            Glide.with(context).load(item.avatars[0])
+        if (item.builtBy.isNotEmpty()) {
+            Glide.with(context).load(item.builtBy[0].avatar)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(view.ivRepoAvatar)
@@ -68,16 +65,16 @@ class RepositoryAdapter(val context: Context) : RecyclerView.Adapter<RepositoryV
 
         view.apply {
 
-            tvAuthorName.text = item.repo.split("/").first()
-            tvRepoName.text = item.repo.split("/").last()
-            tvRepoDesc.text = item.desc
+            tvAuthorName.text = item.username
+            tvRepoName.text = item.repositoryName
+            tvRepoDesc.text = item.description
 
-            val col = Color.parseColor(item.lang.getColor() ?: "#000000")
+            val col = Color.parseColor(item.languageColor ?: "#000000")
             ivLanguageColor.setBackgroundColor(col)
 
-            tvLanguageName.text = item.lang
-            tvStarCount.text = item.stars
-            tvForkCount.text = item.forks
+            tvLanguageName.text = item.language
+            tvStarCount.text = item.totalStars.toString()
+            tvForkCount.text = item.forks.toString()
 
         }
         var isExpanded = false
