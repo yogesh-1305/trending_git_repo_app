@@ -144,7 +144,6 @@ class RepositoryAdapter(val context: Activity, val fragmentId: Int) :
             tvForkCount.show()
             tvStarCount.show()
             tvLanguageName.show()
-            repoListItemLayout.setBackgroundColor(Color.parseColor("#dddddd"))
         }
     }
 
@@ -159,7 +158,6 @@ class RepositoryAdapter(val context: Activity, val fragmentId: Int) :
             tvForkCount.gone()
             tvStarCount.gone()
             tvLanguageName.gone()
-            repoListItemLayout.setBackgroundColor(Color.parseColor("#ffffff"))
         }
     }
 }

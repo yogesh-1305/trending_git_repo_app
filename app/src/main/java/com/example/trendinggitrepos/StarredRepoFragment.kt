@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -80,5 +81,8 @@ class StarredRepoFragment : Fragment() {
         this@StarredRepoFragment.adapter = StarredItemAdapter(requireActivity())
         this.adapter = this@StarredRepoFragment.adapter
         layoutManager = LinearLayoutManager(requireContext())
+        addItemDecoration(
+            DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+        )
     }
 }

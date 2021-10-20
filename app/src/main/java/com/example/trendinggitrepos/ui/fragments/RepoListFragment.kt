@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.trendinggitrepos.adapters.RepositoryAdapter
@@ -49,17 +50,12 @@ class RepoListFragment : Fragment() {
         viewModel.repositories.observe(viewLifecycleOwner, {
 
             it?.let {
-                if (refreshed) {
-                    adapter.notifyDataSetChanged()
-                } else {
-                    adapter.submitList(it)
-
-                }
-                Log.i("list ---", it.toString())
-                binding.shimmerRepoList.hide()
-                binding.rvRepoList.show()
-                swipeRefreshLayout.isRefreshing = false
+                adapter.submitList(it)
             }
+            binding.shimmerRepoList.hide()
+            binding.rvRepoList.show()
+            swipeRefreshLayout.isRefreshing = false
+
         })
 
         return binding.root
@@ -69,5 +65,8 @@ class RepoListFragment : Fragment() {
         this@RepoListFragment.adapter = RepositoryAdapter(requireActivity(), REPO_LIST_FRAGMENT_ID)
         this.adapter = this@RepoListFragment.adapter
         layoutManager = LinearLayoutManager(requireContext())
+        addItemDecoration(
+            DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+        )
     }
 }

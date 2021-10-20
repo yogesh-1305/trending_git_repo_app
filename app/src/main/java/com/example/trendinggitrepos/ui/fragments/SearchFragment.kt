@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.trendinggitrepos.R
 import com.example.trendinggitrepos.adapters.RepositoryAdapter
@@ -50,6 +51,9 @@ class SearchFragment : Fragment(), TextView.OnEditorActionListener {
         this@SearchFragment.adapter = RepositoryAdapter(requireActivity(), SEARCH_LIST_FRAGMENT_ID)
         this.adapter = this@SearchFragment.adapter
         layoutManager = LinearLayoutManager(requireContext())
+        addItemDecoration(
+            DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+        )
     }
 
     override fun onEditorAction(view: TextView?, actionId: Int, event: KeyEvent?): Boolean {

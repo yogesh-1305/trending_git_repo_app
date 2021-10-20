@@ -14,12 +14,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.example.trendinggitrepos.R
-import com.example.trendinggitrepos.data.model.CustomRepository
+import com.example.trendinggitrepos.data.model.DatabaseRepository
 import com.example.trendinggitrepos.data.viewModels.RepositoryViewModel
 import com.example.trendinggitrepos.databinding.FragmentWebViewBinding
 import com.example.trendinggitrepos.util.UtilityMethods.gone
 import com.example.trendinggitrepos.util.UtilityMethods.hasNetwork
-import com.example.trendinggitrepos.util.UtilityMethods.hide
 import com.example.trendinggitrepos.util.UtilityMethods.show
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,13 +32,13 @@ class WebViewFragment : Fragment() {
     private val args: WebViewFragmentArgs by navArgs()
 
     companion object {
-        var repo: CustomRepository? = null
+        var repo: DatabaseRepository? = null
 
-        fun setRepoToSave(repo: CustomRepository){
+        fun setRepoToSave(repo: DatabaseRepository){
             this.repo = repo
         }
 
-        fun getRepoToSave(): CustomRepository {
+        fun getRepoToSave(): DatabaseRepository {
             return repo!!
         }
     }

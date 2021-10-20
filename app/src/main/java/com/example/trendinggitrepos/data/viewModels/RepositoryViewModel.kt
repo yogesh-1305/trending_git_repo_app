@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.trendinggitrepos.data.model.RepoApiResponseItem
-import com.example.trendinggitrepos.data.model.CustomRepository
+import com.example.trendinggitrepos.data.model.DatabaseRepository
 import com.example.trendinggitrepos.data.repositories.RepoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,7 +27,7 @@ class RepositoryViewModel @Inject constructor(
         MutableLiveData()
     }
 
-    val readAllRepositories: LiveData<List<CustomRepository>> = repository.readAllRepositories
+    val readAllRepositories: LiveData<List<DatabaseRepository>> = repository.readAllRepositories
 
 
     //------------ methods (API) -----------------------------------------------------------------
@@ -62,13 +62,13 @@ class RepositoryViewModel @Inject constructor(
 
     //------------ methods (DB) -----------------------------------------------------------------
 
-    fun saveRepoToDB(repo: CustomRepository) {
+    fun saveRepoToDB(repo: DatabaseRepository) {
         viewModelScope.launch {
             repository.insertRepo(repo)
         }
     }
 
-    fun deleteRepo(repo: CustomRepository) {
+    fun deleteRepo(repo: DatabaseRepository) {
         viewModelScope.launch {
             repository.deleteRepo(repo)
         }

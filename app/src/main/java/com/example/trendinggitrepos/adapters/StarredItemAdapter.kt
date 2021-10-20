@@ -14,11 +14,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.trendinggitrepos.R
 import com.example.trendinggitrepos.StarredRepoFragmentDirections
-import com.example.trendinggitrepos.constants.Constants
-import com.example.trendinggitrepos.data.model.CustomRepository
+import com.example.trendinggitrepos.data.model.DatabaseRepository
 import com.example.trendinggitrepos.databinding.RepoListItemBinding
-import com.example.trendinggitrepos.ui.fragments.RepoListFragmentDirections
-import com.example.trendinggitrepos.ui.fragments.SearchFragmentDirections
 import com.example.trendinggitrepos.util.UtilityMethods.show
 
 class StarredItemAdapter(val context: Activity) :
@@ -27,17 +24,17 @@ class StarredItemAdapter(val context: Activity) :
     inner class StarredItemViewHolder(val binding: RepoListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private val diffCallback = object : DiffUtil.ItemCallback<CustomRepository>() {
+    private val diffCallback = object : DiffUtil.ItemCallback<DatabaseRepository>() {
         override fun areItemsTheSame(
-            oldItem: CustomRepository,
-            newItem: CustomRepository
+            oldItem: DatabaseRepository,
+            newItem: DatabaseRepository
         ): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: CustomRepository,
-            newItem: CustomRepository
+            oldItem: DatabaseRepository,
+            newItem: DatabaseRepository
         ): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
@@ -45,7 +42,7 @@ class StarredItemAdapter(val context: Activity) :
 
     val differ = AsyncListDiffer(this, diffCallback)
 
-    fun submitList(list: List<CustomRepository>) = differ.submitList(list)
+    fun submitList(list: List<DatabaseRepository>) = differ.submitList(list)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StarredItemViewHolder {
@@ -90,7 +87,7 @@ class StarredItemAdapter(val context: Activity) :
         setClickListeners(view, item)
     }
 
-    private fun setClickListeners(view: RepoListItemBinding, item: CustomRepository) {
+    private fun setClickListeners(view: RepoListItemBinding, item: DatabaseRepository) {
         val navController = context.findNavController(R.id.fragmentContainerView)
         view.tvRepoLink.setOnClickListener {
             navController.navigate(
