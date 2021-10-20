@@ -19,6 +19,7 @@ import com.example.trendinggitrepos.util.Resource
 import com.example.trendinggitrepos.util.UtilityMethods.gone
 import com.example.trendinggitrepos.util.UtilityMethods.hide
 import com.example.trendinggitrepos.util.startAnimation
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -120,6 +121,8 @@ class MainActivity : AppCompatActivity() {
                 FabState.ON_WEB_VIEW_FRAGMENT -> {
                     val repo = WebViewFragment.getRepoToSave()
                     viewModel.saveRepoToDB(repo)
+                    Snackbar.make(binding.root, "Repository Starred Success", Snackbar.LENGTH_SHORT)
+                        .show()
                 }
             }
 
