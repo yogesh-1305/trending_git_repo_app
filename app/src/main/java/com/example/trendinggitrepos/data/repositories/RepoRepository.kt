@@ -2,7 +2,7 @@ package com.example.trendinggitrepos.data.repositories
 
 import androidx.lifecycle.LiveData
 import com.example.trendinggitrepos.data.api.RepositoryApi
-import com.example.trendinggitrepos.data.model.CustomRepository
+import com.example.trendinggitrepos.data.model.DatabaseRepository
 import com.example.trendinggitrepos.db.DatabaseDao
 import javax.inject.Inject
 
@@ -13,7 +13,7 @@ class RepoRepository @Inject constructor(
 
     // ---------- variables ---------------------------------------------------------------
 
-    val readAllRepositories: LiveData<List<CustomRepository>> = dao.getRepositories()
+    val readAllRepositories: LiveData<List<DatabaseRepository>> = dao.getRepositories()
 
     //------------ methods (API) -----------------------------------------------------------------
 
@@ -23,7 +23,7 @@ class RepoRepository @Inject constructor(
 
     //------------ methods (DATABASE) ------------------------------------------------------------
 
-    suspend fun insertRepo(repo: CustomRepository) = dao.insertRepo(repo)
+    suspend fun insertRepo(repo: DatabaseRepository) = dao.insertRepo(repo)
 
-    suspend fun deleteRepo(repo: CustomRepository) = dao.deleteRepo(repo)
+    suspend fun deleteRepo(repo: DatabaseRepository) = dao.deleteRepo(repo)
 }

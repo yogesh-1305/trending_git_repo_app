@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity(tableName = "saved_repositories", indices = [Index(value = ["url"], unique = true)])
-data class CustomRepository(
+data class DatabaseRepository(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val builtBy: String? = "",

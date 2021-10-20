@@ -15,8 +15,8 @@ data class RepoApiResponseItem(
     val username: String? = ""
 ) {
     companion object {
-        fun RepoApiResponseItem.toCustomRepository(): CustomRepository {
-            return CustomRepository(
+        fun RepoApiResponseItem.toCustomRepository(): DatabaseRepository {
+            return DatabaseRepository(
                 builtBy = this.builtBy[0].avatar ?: "",
                 username = username,
                 repositoryName = repositoryName,
