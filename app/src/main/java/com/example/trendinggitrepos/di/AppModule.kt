@@ -2,6 +2,7 @@ package com.example.trendinggitrepos.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.trendinggitrepos.constants.Constants.API_BASE_URL
 import com.example.trendinggitrepos.constants.Constants.DATABASE_NAME
 import com.example.trendinggitrepos.data.api.RepositoryApi
 import com.example.trendinggitrepos.data.repositories.RepoRepository
@@ -39,22 +40,30 @@ object AppModule {
     @Provides
     @Singleton
     fun provideApiInstance(@ApplicationContext context: Context): RepositoryApi {
-        val cacheSize = (5 * 1024 * 1024).toLong()
+        val cacheSize = (5 * 1024 * 1024).toLong() // 5 MB
         val myCache = Cache(context.cacheDir, cacheSize)
 
         val okHttpClient = OkHttpClient.Builder()
             .cache(myCache)
             .addInterceptor { chain ->
                 var request = chain.request()
-                request = if (hasNetwork(context)!!)
+                request = if (hasNetwork(context)!!) {
+                    // network is connected, return data from cache if same request is made within 5 seconds
                     request.newBuilder().header("Cache-Control", "public, max-age=" + 5).build()
-                else
-                    request.newBuilder().header("Cache-Control", "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7).build()
+                } else {
+                    // network dis-connected, return data from cache
+                    // if data is less that 7 days old, otherwise discard
+                    request.newBuilder().header(
+                        "Cache-Control",
+                        "public, only-if-cached, max-stale=" + 60 * 60 * 24 * 7
+                    ).build()
+                }
                 chain.proceed(request)
             }
             .build()
+
         return Retrofit.Builder()
-            .baseUrl("https://gh-trending-api.herokuapp.com/")
+            .baseUrl(API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

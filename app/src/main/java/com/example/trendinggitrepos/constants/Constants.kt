@@ -8,4 +8,6 @@ object Constants {
     const val CUSTOM_REPOSITORY_TAG = "custom_repository"
 
     const val DATABASE_NAME = "trending_repo_db"
+
+    const val API_BASE_URL = "https://gh-trending-api.herokuapp.com/"
 }

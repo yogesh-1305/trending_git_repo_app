@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/starredRepoFragment"
-        android:name="com.example.trendinggitrepos.StarredRepoFragment"
+        android:name="com.example.trendinggitrepos.ui.fragments.StarredRepoFragment"
         android:label="fragment_starred_repo"
         tools:layout="@layout/fragment_starred_repo" >
         <action
