@@ -41,9 +41,13 @@
     </fragment>
     <fragment
         android:id="@+id/starredRepoFragment"
-        android:name="com.example.trendinggitrepos.starredRepoFragment"
+        android:name="com.example.trendinggitrepos.StarredRepoFragment"
         android:label="fragment_starred_repo"
-        tools:layout="@layout/fragment_starred_repo" />
+        tools:layout="@layout/fragment_starred_repo" >
+        <action
+            android:id="@+id/action_starredRepoFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
+    </fragment>
     <action
         android:id="@+id/action_global_starredRepoFragment"
         app:destination="@id/starredRepoFragment"

@@ -1,14 +1,11 @@
 package com.example.trendinggitrepos.adapters
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Color
-import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -16,36 +13,31 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.trendinggitrepos.R
-import com.example.trendinggitrepos.adapters.RepositoryAdapter.RepositoryViewHolder
-import com.example.trendinggitrepos.constants.Constants.CUSTOM_REPOSITORY_TAG
-import com.example.trendinggitrepos.constants.Constants.REPO_LIST_FRAGMENT_ID
-import com.example.trendinggitrepos.constants.Constants.SEARCH_LIST_FRAGMENT_ID
-import com.example.trendinggitrepos.data.model.RepoApiResponseItem
-import com.example.trendinggitrepos.data.model.RepoApiResponseItem.Companion.toCustomRepository
+import com.example.trendinggitrepos.StarredRepoFragmentDirections
+import com.example.trendinggitrepos.constants.Constants
+import com.example.trendinggitrepos.data.model.CustomRepository
 import com.example.trendinggitrepos.databinding.RepoListItemBinding
-import com.example.trendinggitrepos.ui.fragments.RepoListFragment
 import com.example.trendinggitrepos.ui.fragments.RepoListFragmentDirections
 import com.example.trendinggitrepos.ui.fragments.SearchFragmentDirections
-import com.example.trendinggitrepos.util.UtilityMethods.gone
 import com.example.trendinggitrepos.util.UtilityMethods.show
 
-class RepositoryAdapter(val context: Activity, val fragmentId: Int) :
-    RecyclerView.Adapter<RepositoryViewHolder>() {
+class StarredItemAdapter(val context: Activity) :
+    RecyclerView.Adapter<StarredItemAdapter.StarredItemViewHolder>() {
 
-    inner class RepositoryViewHolder(val binding: RepoListItemBinding) :
+    inner class StarredItemViewHolder(val binding: RepoListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private val diffCallback = object : DiffUtil.ItemCallback<RepoApiResponseItem>() {
+    private val diffCallback = object : DiffUtil.ItemCallback<CustomRepository>() {
         override fun areItemsTheSame(
-            oldItem: RepoApiResponseItem,
-            newItem: RepoApiResponseItem
+            oldItem: CustomRepository,
+            newItem: CustomRepository
         ): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: RepoApiResponseItem,
-            newItem: RepoApiResponseItem
+            oldItem: CustomRepository,
+            newItem: CustomRepository
         ): Boolean {
             return oldItem.hashCode() == newItem.hashCode()
         }
@@ -53,13 +45,11 @@ class RepositoryAdapter(val context: Activity, val fragmentId: Int) :
 
     private val differ = AsyncListDiffer(this, diffCallback)
 
-    fun submitList(list: List<RepoApiResponseItem>) = differ.submitList(list)
+    fun submitList(list: List<CustomRepository>) = differ.submitList(list)
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): RepositoryViewHolder {
-        return RepositoryViewHolder(
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StarredItemViewHolder {
+        return StarredItemViewHolder(
             RepoListItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -68,20 +58,16 @@ class RepositoryAdapter(val context: Activity, val fragmentId: Int) :
         )
     }
 
-    override fun onBindViewHolder(holder: RepositoryViewHolder, position: Int) {
-        val view = holder.binding
+    override fun onBindViewHolder(holder: StarredItemViewHolder, position: Int) {
         val item = differ.currentList[position]
+        val view = holder.binding
 
-        if (item.builtBy.isNotEmpty()) {
-            Glide.with(context).load(item.builtBy[0].avatar ?: R.drawable.ic_launcher_foreground)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(view.ivRepoAvatar)
-        } else {
-            Glide.with(context).load(R.drawable.ic_launcher_foreground)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .into(view.ivRepoAvatar)
-        }
+        makeEveryViewVisible(view)
+
+        Glide.with(context).load(item.builtBy ?: R.drawable.ic_launcher_foreground)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .placeholder(R.drawable.ic_launcher_foreground)
+            .into(view.ivRepoAvatar)
 
         view.apply {
 
@@ -99,41 +85,23 @@ class RepositoryAdapter(val context: Activity, val fragmentId: Int) :
             tvLanguageName.text = item.language
             tvStarCount.text = item.totalStars.toString()
             tvForkCount.text = item.forks.toString()
-
         }
 
+        setClickListeners(view, item)
+    }
+
+    private fun setClickListeners(view: RepoListItemBinding, item: CustomRepository) {
         val navController = context.findNavController(R.id.fragmentContainerView)
         view.tvRepoLink.setOnClickListener {
-
-            val customRepository = item.toCustomRepository()
-            if (fragmentId == REPO_LIST_FRAGMENT_ID) {
-                navController.navigate(
-                   RepoListFragmentDirections.actionRepoListFragmentToWebViewFragment(customRepository)
+            navController.navigate(
+                StarredRepoFragmentDirections.actionStarredRepoFragmentToWebViewFragment(
+                    item
                 )
-            } else if (fragmentId == SEARCH_LIST_FRAGMENT_ID) {
-                navController.navigate(
-                   SearchFragmentDirections.actionSearchFragmentToWebViewFragment(customRepository)
-                )
-            }
-        }
-
-        var isExpanded = false
-        view.repoListItemLayout.setOnClickListener {
-            if (!isExpanded) {
-                isExpanded = true
-                expandItem(view)
-            } else {
-                isExpanded = false
-                collapseItem(view)
-            }
+            )
         }
     }
 
-    override fun getItemCount(): Int {
-        return differ.currentList.size
-    }
-
-    private fun expandItem(view: RepoListItemBinding) {
+    private fun makeEveryViewVisible(view: RepoListItemBinding) {
         view.apply {
             ivLanguageColor.show()
             ivStar.show()
@@ -144,22 +112,10 @@ class RepositoryAdapter(val context: Activity, val fragmentId: Int) :
             tvForkCount.show()
             tvStarCount.show()
             tvLanguageName.show()
-            repoListItemLayout.setBackgroundColor(Color.parseColor("#dddddd"))
         }
     }
 
-    private fun collapseItem(view: RepoListItemBinding) {
-        view.apply {
-            ivLanguageColor.gone()
-            ivStar.gone()
-            ivFork.gone()
-
-            tvRepoLink.gone()
-            tvRepoDesc.gone()
-            tvForkCount.gone()
-            tvStarCount.gone()
-            tvLanguageName.gone()
-            repoListItemLayout.setBackgroundColor(Color.parseColor("#ffffff"))
-        }
+    override fun getItemCount(): Int {
+        return differ.currentList.size
     }
 }
