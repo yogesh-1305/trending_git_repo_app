@@ -43,7 +43,7 @@ class StarredItemAdapter(val context: Activity) :
         }
     }
 
-    private val differ = AsyncListDiffer(this, diffCallback)
+    val differ = AsyncListDiffer(this, diffCallback)
 
     fun submitList(list: List<CustomRepository>) = differ.submitList(list)
 
