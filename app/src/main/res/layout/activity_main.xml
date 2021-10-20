@@ -26,7 +26,8 @@
                 app:layout_collapseMode="pin"
                 android:layout_width="match_parent"
                 app:menu="@menu/search_menu"
-                app:title="Trending" />
+                app:title="Trending"
+                app:titleCentered="true"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
