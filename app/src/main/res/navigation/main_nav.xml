@@ -37,7 +37,7 @@
         tools:layout="@layout/fragment_web_view" >
         <argument
             android:name="customRepository"
-            app:argType="com.example.trendinggitrepos.data.model.CustomRepository" />
+            app:argType="com.example.trendinggitrepos.data.model.DatabaseRepository" />
     </fragment>
     <fragment
         android:id="@+id/starredRepoFragment"

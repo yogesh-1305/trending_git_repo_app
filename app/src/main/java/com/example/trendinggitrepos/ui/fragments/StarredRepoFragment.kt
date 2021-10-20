@@ -1,4 +1,4 @@
-package com.example.trendinggitrepos
+package com.example.trendinggitrepos.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.trendinggitrepos.adapters.RepositoryAdapter
 import com.example.trendinggitrepos.adapters.StarredItemAdapter
-import com.example.trendinggitrepos.constants.Constants
 import com.example.trendinggitrepos.data.viewModels.RepositoryViewModel
 import com.example.trendinggitrepos.databinding.FragmentStarredRepoBinding
+import com.example.trendinggitrepos.util.UtilityMethods.hide
+import com.example.trendinggitrepos.util.UtilityMethods.show
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_search.*
 
@@ -56,7 +56,7 @@ class StarredRepoFragment : Fragment() {
 
                 viewModel.deleteRepo(item)
 
-                Snackbar.make(view ,"Successfully Deleted", Snackbar.LENGTH_LONG).apply {
+                Snackbar.make(view, "Successfully Deleted", Snackbar.LENGTH_LONG).apply {
                     setAction("Undo") {
                         viewModel.saveRepoToDB(item)
                     }
@@ -70,12 +70,16 @@ class StarredRepoFragment : Fragment() {
         }
 
         viewModel.readAllRepositories.observe(viewLifecycleOwner, {
-            if (it != null) {
+            if (it.isNotEmpty()) {
                 adapter.submitList(it)
+                hideAnimationView()
+            } else {
+                showAnimationView()
             }
         })
 
     }
+
 
     private fun setupRecyclerView() = binding.rvStarredRepos.apply {
         this@StarredRepoFragment.adapter = StarredItemAdapter(requireActivity())
@@ -84,5 +88,15 @@ class StarredRepoFragment : Fragment() {
         addItemDecoration(
             DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
         )
+    }
+
+    private fun hideAnimationView() {
+        binding.rvStarredRepos.show()
+        binding.starredRepoAnimView.hide()
+    }
+
+    private fun showAnimationView() {
+        binding.rvStarredRepos.hide()
+        binding.starredRepoAnimView.show()
     }
 }

@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.trendinggitrepos.R
-import com.example.trendinggitrepos.StarredRepoFragmentDirections
 import com.example.trendinggitrepos.data.model.DatabaseRepository
 import com.example.trendinggitrepos.databinding.RepoListItemBinding
+import com.example.trendinggitrepos.ui.fragments.StarredRepoFragmentDirections
 import com.example.trendinggitrepos.util.UtilityMethods.show
 
 class StarredItemAdapter(val context: Activity) :
@@ -42,6 +42,7 @@ class StarredItemAdapter(val context: Activity) :
 
     val differ = AsyncListDiffer(this, diffCallback)
 
+    // list of items to be shown
     fun submitList(list: List<DatabaseRepository>) = differ.submitList(list)
 
 
